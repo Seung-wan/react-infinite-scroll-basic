@@ -9,9 +9,9 @@ import './index.css';
 const queryClient = new QueryClient();
 
 async function enableMocking() {
-  if (!import.meta.env.DEV) {
-    return;
-  }
+  // if (!import.meta.env.DEV) {
+  //   return;
+  // }
 
   const { worker } = await import('./mocks/browser');
 
