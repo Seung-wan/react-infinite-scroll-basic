@@ -4,12 +4,14 @@ import { useGetProductsSuspenseInfiniteQuery } from '../../../hooks/queries/prod
 import { ProductItem } from '..';
 import { Spinner } from '../../common';
 
+const PAGE_SIZE = 20;
+
 export default function ProductList() {
   const {
     data: products,
     isFetching,
     fetchNextPage,
-  } = useGetProductsSuspenseInfiniteQuery();
+  } = useGetProductsSuspenseInfiniteQuery({ per: PAGE_SIZE });
 
   const ref = useIntersectionObserver({ callback: fetchNextPage });
 
@@ -22,9 +24,8 @@ export default function ProductList() {
           <ProductItem key={product.id} {...product} />
         ))}
       </ul>
-      <div ref={ref} />
-
       {isFetching && <Spinner />}
+      <div ref={ref} />
     </div>
   );
 }

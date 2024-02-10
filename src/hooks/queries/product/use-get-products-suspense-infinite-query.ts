@@ -1,14 +1,16 @@
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
+import { PRODUCT_KEYS } from '../../../constants/query-keys';
+
 import { productApi } from '../../../apis/product';
 
-export function useGetProductsSuspenseInfiniteQuery() {
+export function useGetProductsSuspenseInfiniteQuery({ per }: { per: number }) {
   return useSuspenseInfiniteQuery({
-    queryKey: ['products'],
+    queryKey: PRODUCT_KEYS.LISTS(),
     queryFn: ({ pageParam }) =>
-      productApi.getProducts({ page: pageParam, per: 20 }),
+      productApi.getProducts({ page: pageParam, per }),
     getNextPageParam: (pages, allPages) => {
-      if (pages.length !== 20) {
+      if (pages.length !== per) {
         return undefined;
       }
 
